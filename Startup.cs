@@ -30,6 +30,8 @@ namespace ProAgil.WebAPI
             //Registrando o Contexto de Banco de Dados
             var conexao = Configuration.GetConnectionString("DefaultConnection"); 
             services.AddDbContext<DataContext>(x => x.UseSqlite(conexao)); 
+            /*Liberando permissão de CORS*/
+            services.AddCors(); 
             services.AddControllers();
         }
 
@@ -46,6 +48,9 @@ namespace ProAgil.WebAPI
             app.UseRouting();
 
             app.UseAuthorization();
+            
+            //Continuação de Liberação de CORS
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); 
 
             app.UseEndpoints(endpoints =>
             {
