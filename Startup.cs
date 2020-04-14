@@ -51,6 +51,8 @@ namespace ProAgil.WebAPI
             
             //Continuação de Liberação de CORS
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); 
+            //Liberação de arquivos de imagens. /wwwroot/img
+            app.UseStaticFiles(); 
 
             app.UseEndpoints(endpoints =>
             {
