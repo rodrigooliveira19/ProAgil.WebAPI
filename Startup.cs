@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using ProAgil.WebAPI.Data;
+using ProAgil.Repository;
 
 namespace ProAgil.WebAPI
 {
@@ -29,7 +29,9 @@ namespace ProAgil.WebAPI
         {
             //Registrando o Contexto de Banco de Dados
             var conexao = Configuration.GetConnectionString("DefaultConnection"); 
-            services.AddDbContext<DataContext>(x => x.UseSqlite(conexao)); 
+            services.AddDbContext<ProAgilContext>(x => x.UseSqlite(conexao)); 
+            /*Especifica o tipo da controler a ser usada*/
+            services.AddScoped<IProAgilRepository, ProAgilRepository>(); 
             /*Liberando permissão de CORS*/
             services.AddCors(); 
             services.AddControllers();

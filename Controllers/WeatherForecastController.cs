@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ProAgil.WebAPI.Data;
+using ProAgil.Repository;
 using ProAgil.WebAPI.Model;
 
 namespace ProAgil.WebAPI.Controllers
@@ -20,34 +20,14 @@ namespace ProAgil.WebAPI.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        //private readonly ILogger<WeatherForecastController> _logger;
-        private readonly DataContext Context; 
+        private readonly ProAgilContext Context; 
 
-        /*public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ProAgilContext proAgilContext)
         {
-            _logger = logger;
-        }*/
-
-        public WeatherForecastController(DataContext context)
-        {
-            this.Context = context; 
+            this.Context = proAgilContext; 
         }
 
-        /*
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
-        } 
-        */
-
+        
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -69,7 +49,7 @@ namespace ProAgil.WebAPI.Controllers
         {
             try
             {
-                var result = await this.Context.Eventos.FirstOrDefaultAsync(e => e.EventoId == id); 
+                var result = await this.Context.Eventos.FirstOrDefaultAsync(e => e.Id == id); 
                 return Ok(result); 
             }
             catch (System.Exception)
